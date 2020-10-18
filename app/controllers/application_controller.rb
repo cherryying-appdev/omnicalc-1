@@ -23,6 +23,19 @@ class ApplicationController < ActionController::Base
     render({ :template => "calculation_templates/square_root_results.html.erb"})
   end
 
+  def blank_payment_form
+    render({ :template => "calculation_templates/payment_form.html.erb"})
+  end
+
+  def calculate_payment
+
+    @apr = params.fetch("user_apr").to_f
+    @num_of_years = params.fetch("user_years").to_i
+    @principal = params.fetch("user_principal").to_f.round(2)
+    @payment = (@apr/100/12 * @principal).round(2)
+    render({ :template => "calculation_templates/payment_results.html.erb"})
+  end
+
   def calculate_random
     @lower = params.fetch("user_min").to_f
     @upper = params.fetch("user_max").to_f
